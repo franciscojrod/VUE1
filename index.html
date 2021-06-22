@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <app-button></app-button>
+    <app-tvshow-list>
+    </app-tvshow-list>
+  </div>
+  <script>
+    Vue.component('app-tvshow-list', {
+      data: function() {
+        return {
+          tvShow: [
+            {name: 'game of thrones', season: 7},
+            {name: 'Friends', season: 7},
+            {name: 'How I met your mother', season: 7},
+          ]
+        }
+      },
+      template: `
+          <ul>
+            <app-tvshow
+              v-for="(show, index) in tvShow" 
+              :key="index"
+              :name="show.name"
+              :season="show.season">
+            </app-tvshow> 
+          </ul> 
+      `
+    })
+    Vue.component('app-tvshow', {
+      props: {
+        name: String,
+        season: Number   
+      },
+      template: `
+        <li>
+          <strong>{{ name }}</strong> ({{ season }} temporadas)
+        </li>
+      `
+    });
+    Vue.component('app-button', {
+      data: function() {
+        return {
+          mostrar: true,
+        }
+      },
+      methods: {
+        changeVisibility: function () {
+          this.mostrar = !this.mostrar 
+        }
+      },
+      template: `
+        <button @click="changeVisibility">Mostrar/ocultar</button>
+      `
+    });
+    const app = new Vue({
+      el: '#app'
+    })
+  </script>
+  
+</body>
+</html>
